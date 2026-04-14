@@ -1,0 +1,127 @@
+---
+interface CarouselImage {
+	src: string;
+	alt: string;
+}
+
+interface Props {
+	images: CarouselImage[];
+}
+
+const { images } = Astro.props;
+const carouselId = `carousel-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<div class="space-y-4" role="region" aria-label="Galeria de imagenes del proyecto">
+	<div class="relative">
+		<div
+			id={carouselId}
+			class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth rounded-2xl"
+			aria-live="polite"
+		>
+			{images.map((image, index) => (
+				<figure class="min-w-full snap-center overflow-hidden rounded-2xl bg-text-100 dark:bg-text-900">
+					<img
+						src={image.src}
+						alt={image.alt}
+						loading={index === 0 ? 'eager' : 'lazy'}
+						class="aspect-video h-auto w-full object-cover"
+					/>
+				</figure>
+			))}
+		</div>
+
+		{
+			images.length > 1 && (
+				<>
+					<button
+						type="button"
+						class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-text-900 shadow-md backdrop-blur hover:bg-white dark:bg-black/60 dark:text-text-100"
+						data-carousel-prev={carouselId}
+						aria-label="Imagen anterior"
+					>
+						←
+					</button>
+					<button
+						type="button"
+						class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-text-900 shadow-md backdrop-blur hover:bg-white dark:bg-black/60 dark:text-text-100"
+						data-carousel-next={carouselId}
+						aria-label="Imagen siguiente"
+					>
+						→
+					</button>
+				</>
+			)
+		}
+	</div>
+
+	{
+		images.length > 1 && (
+			<div class="flex justify-center gap-2" role="tablist" aria-label="Indicadores del carrusel">
+				{images.map((_, index) => (
+					<button
+						type="button"
+						class="h-2.5 w-2.5 rounded-full bg-text-300 transition data-[active=true]:w-7 data-[active=true]:bg-primary-500 dark:bg-text-700"
+						data-carousel-dot={carouselId}
+						data-slide={index}
+						data-active={index === 0 ? 'true' : 'false'}
+						aria-label={`Ir a la imagen ${index + 1}`}
+					/>
+				))}
+			</div>
+		)
+	}
+</div>
+
+<script>
+	const scrollers = document.querySelectorAll<HTMLElement>('[id^="carousel-"]');
+
+	const getSlideIndex = (scrollContainer: HTMLElement) => {
+		const width = scrollContainer.clientWidth;
+		return Math.round(scrollContainer.scrollLeft / width);
+	};
+
+	const updateDots = (carouselId: string, index: number) => {
+		const dots = document.querySelectorAll(`[data-carousel-dot="${carouselId}"]`);
+		dots.forEach((dot, dotIndex) => {
+			dot.setAttribute('data-active', dotIndex === index ? 'true' : 'false');
+		});
+	};
+
+	scrollers.forEach((scroller) => {
+		const carouselId = scroller.getAttribute('id');
+		if (!carouselId) return;
+
+		const total = scroller.children.length;
+
+		const nextBtn = document.querySelector(`[data-carousel-next="${carouselId}"]`);
+		const prevBtn = document.querySelector(`[data-carousel-prev="${carouselId}"]`);
+		const dots = document.querySelectorAll(`[data-carousel-dot="${carouselId}"]`);
+
+		nextBtn?.addEventListener('click', () => {
+			const index = getSlideIndex(scroller);
+			const target = Math.min(index + 1, total - 1);
+			scroller.scrollTo({ left: target * scroller.clientWidth, behavior: 'smooth' });
+			updateDots(carouselId, target);
+		});
+
+		prevBtn?.addEventListener('click', () => {
+			const index = getSlideIndex(scroller);
+			const target = Math.max(index - 1, 0);
+			scroller.scrollTo({ left: target * scroller.clientWidth, behavior: 'smooth' });
+			updateDots(carouselId, target);
+		});
+
+		dots.forEach((dot) => {
+			dot.addEventListener('click', () => {
+				const slide = Number(dot.getAttribute('data-slide') ?? 0);
+				scroller.scrollTo({ left: slide * scroller.clientWidth, behavior: 'smooth' });
+				updateDots(carouselId, slide);
+			});
+		});
+
+		scroller.addEventListener('scroll', () => {
+			updateDots(carouselId, getSlideIndex(scroller));
+		});
+	});
+</script>

@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MainContainerSection from '../components/ui/MainContainerSection.astro';
+import HeaderSection from '../components/ui/HeaderSection.astro';
+import Button from '../components/ui/Button.astro';
+import { personal } from '../data/personal';
+---
+
+<BaseLayout title={`Sobre mi | ${personal.name}`}>
+	<MainContainerSection class="pt-20">
+		<div class="grid items-start gap-8 md:grid-cols-[220px_1fr]">
+			<div class="mx-auto flex aspect-square w-52 items-center justify-center rounded-3xl bg-gradient-to-br from-primary-200 to-secondary-200 text-5xl font-bold text-text-900 dark:from-primary-900 dark:to-secondary-900 dark:text-text-50">
+				{personal.name
+					.split(' ')
+					.slice(0, 2)
+					.map((p) => p[0])
+					.join('')}
+			</div>
+
+			<div class="space-y-5">
+				<HeaderSection title="Sobre mi" subtitle="Construyo experiencias digitales utiles, claras y escalables." />
+				<p class="text-text-700 dark:text-text-200">
+					Me especializo en construir productos web que combinan buena experiencia de usuario con una base tecnica solida. Me interesa especialmente resolver problemas reales con interfaces claras y rendimiento consistente.
+				</p>
+				<p class="text-text-700 dark:text-text-200">
+					Durante los ultimos anos he trabajado en proyectos de producto, paneles internos y plataformas transaccionales. Disfruto colaborar con equipos de diseno y negocio para llevar ideas a produccion de forma iterativa.
+				</p>
+				<p class="text-text-700 dark:text-text-200">
+					Mi enfoque de trabajo prioriza mantenibilidad, accesibilidad y comunicacion. Busco que cada entrega sea util desde el dia uno y facil de evolucionar con el tiempo.
+				</p>
+			</div>
+		</div>
+	</MainContainerSection>
+
+	<MainContainerSection>
+		<HeaderSection title="Educacion" />
+		<ul class="space-y-4">
+			<li class="rounded-2xl border border-text-200 bg-white/70 p-5 dark:border-text-800 dark:bg-text-950/70">
+				<h3 class="font-bold text-text-900 dark:text-text-50">Ingenieria en Sistemas</h3>
+				<p class="text-text-600 dark:text-text-300">Universidad Ejemplo · 2018 - 2022</p>
+			</li>
+			<li class="rounded-2xl border border-text-200 bg-white/70 p-5 dark:border-text-800 dark:bg-text-950/70">
+				<h3 class="font-bold text-text-900 dark:text-text-50">Especializacion en UX y Producto</h3>
+				<p class="text-text-600 dark:text-text-300">Academia Digital · 2023</p>
+			</li>
+		</ul>
+	</MainContainerSection>
+
+	<MainContainerSection>
+		<HeaderSection title="Forma de trabajo" />
+		<ul class="list-disc space-y-2 pl-6 text-text-700 dark:text-text-200">
+			<li>Iteraciones cortas con foco en valor real para usuario y negocio.</li>
+			<li>Codigo limpio, reusable y facil de mantener en equipo.</li>
+			<li>Comunicacion clara con stakeholders tecnicos y no tecnicos.</li>
+			<li>Atencion constante a accesibilidad, SEO y rendimiento.</li>
+		</ul>
+
+		<div class="mt-8 flex flex-wrap gap-3">
+			<Button href="#" variant="secondary">Descargar CV (reemplazar enlace)</Button>
+			<Button href="/proyectos" variant="ghost">Ver proyectos</Button>
+		</div>
+	</MainContainerSection>
+</BaseLayout>

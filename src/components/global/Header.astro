@@ -1,0 +1,63 @@
+---
+import { Moon, Sun } from '@lucide/astro';
+import NavMobile from './NavMobile.astro';
+import { personal } from '../../data/personal';
+
+const links = [
+	{ href: '/', label: 'Inicio' },
+	{ href: '/sobre-mi', label: 'Sobre mi' },
+	{ href: '/skills', label: 'Skills' },
+	{ href: '/proyectos', label: 'Proyectos' }
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-text-200/70 bg-white/80 backdrop-blur-xl dark:border-text-800/70 dark:bg-text-950/75">
+	<div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+		<a href="/" class="font-bold tracking-tight text-text-900 dark:text-text-50">{personal.name}</a>
+
+		<nav class="hidden items-center gap-2 md:flex" aria-label="Navegacion principal">
+			{links.map((link) => (
+				<a
+					href={link.href}
+					class="rounded-full px-4 py-2 text-sm font-medium text-text-700 transition hover:bg-text-100 hover:text-text-900 dark:text-text-200 dark:hover:bg-text-900 dark:hover:text-text-50"
+				>
+					{link.label}
+				</a>
+			))}
+		</nav>
+
+		<div class="flex items-center gap-2">
+			<button
+				id="theme-toggle"
+				type="button"
+				class="rounded-full border border-text-300 p-2 text-text-800 transition hover:bg-text-100 dark:border-text-700 dark:text-text-100 dark:hover:bg-text-900"
+				aria-label="Alternar tema oscuro o claro"
+			>
+				<span data-theme-icon="sun" class="hidden"><Sun size={18} /></span>
+				<span data-theme-icon="moon" class="hidden"><Moon size={18} /></span>
+			</button>
+
+			<NavMobile />
+		</div>
+	</div>
+</header>
+
+<script>
+	const btn = document.getElementById('theme-toggle');
+	const sun = document.querySelector('[data-theme-icon="sun"]');
+	const moon = document.querySelector('[data-theme-icon="moon"]');
+
+	const syncIcon = () => {
+		const isDark = document.documentElement.classList.contains('dark');
+		sun?.classList.toggle('hidden', !isDark);
+		moon?.classList.toggle('hidden', isDark);
+	};
+
+	syncIcon();
+
+	btn?.addEventListener('click', () => {
+		const isDark = document.documentElement.classList.toggle('dark');
+		localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		syncIcon();
+	});
+</script>

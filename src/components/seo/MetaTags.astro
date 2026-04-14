@@ -1,0 +1,35 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	canonicalURL?: string;
+	type?: 'website' | 'article';
+}
+
+const {
+	title,
+	description,
+	image,
+	canonicalURL = Astro.url.toString(),
+	type = 'website'
+} = Astro.props;
+
+const ogImage = image ?? new URL('/favicon.svg', Astro.url).toString();
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:type" content={type} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="canonical" href={canonicalURL} />

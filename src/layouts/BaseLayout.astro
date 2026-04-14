@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Header from '../components/global/Header.astro';
+import Footer from '../components/global/Footer.astro';
+import MetaTags from '../components/seo/MetaTags.astro';
+import Schema from '../components/seo/Schema.astro';
+import { personal } from '../data/personal';
+
+interface Props {
+	title: string;
+	description?: string;
+	image?: string;
+	canonicalURL?: string;
+	type?: 'website' | 'article';
+}
+
+const {
+	title,
+	description = personal.bio,
+	image,
+	canonicalURL,
+	type = 'website'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+
+		<script is:inline>
+			(() => {
+				const stored = localStorage.getItem('theme');
+				const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const theme = stored ?? (systemPrefersDark ? 'dark' : 'light');
+				document.documentElement.classList.toggle('dark', theme === 'dark');
+			})();
+		</script>
+
+		<MetaTags
+			title={title}
+			description={description}
+			image={image}
+			canonicalURL={canonicalURL}
+			type={type}
+		/>
+		<Schema
+			name={personal.name}
+			jobTitle={personal.role}
+			url={new URL('/', Astro.site ?? Astro.url).toString()}
+			sameAs={[personal.social.github, personal.social.linkedin]}
+		/>
+	</head>
+	<body class="text-text-900 dark:text-text-100 antialiased">
+		<Header />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MainContainerSection from '../components/ui/MainContainerSection.astro';
+import HeaderSection from '../components/ui/HeaderSection.astro';
+import { skills } from '../data/skills';
+
+const categories = ['Todas', ...skills.map((item) => item.category)];
+const levelPercent = {
+	beginner: 40,
+	intermediate: 70,
+	advanced: 95
+} as const;
+---
+
+<BaseLayout title="Skills">
+	<MainContainerSection class="pt-20">
+		<HeaderSection
+			title="Skills"
+			subtitle="Tecnologias, herramientas y conocimientos que aplico en proyectos reales."
+		/>
+
+		<div class="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Filtrar habilidades por categoria">
+			{categories.map((category, index) => (
+				<button
+					type="button"
+					class="rounded-full border border-text-300 px-4 py-2 text-sm font-medium transition hover:bg-text-100 dark:border-text-700 dark:hover:bg-text-900"
+					data-skill-filter={category}
+					data-active={index === 0 ? 'true' : 'false'}
+				>
+					{category}
+				</button>
+			))}
+		</div>
+
+		<div class="grid gap-6 lg:grid-cols-3" id="skills-grid">
+			{skills.map((group) => (
+				<article
+					class="rounded-2xl border border-text-200 bg-white/70 p-5 dark:border-text-800 dark:bg-text-950/70"
+					data-skill-category={group.category}
+				>
+					<h3 class="mb-4 font-bold text-text-900 dark:text-text-50">{group.category}</h3>
+					<ul class="space-y-3">
+						{group.skills.map((skill) => (
+							<li class="rounded-xl bg-text-50 p-3 dark:bg-text-900">
+								<div class="mb-2 flex items-center justify-between">
+									<span class="font-medium text-text-800 dark:text-text-100">{skill.name}</span>
+									<span class="text-small text-text-600 dark:text-text-300">{skill.level}</span>
+								</div>
+								<div class="h-2 rounded-full bg-text-200 dark:bg-text-700">
+									<div
+										class="h-2 rounded-full bg-primary-500"
+										style={`width: ${levelPercent[skill.level]}%`}
+										aria-hidden="true"
+									></div>
+								</div>
+							</li>
+						))}
+					</ul>
+				</article>
+			))}
+		</div>
+	</MainContainerSection>
+</BaseLayout>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('[data-skill-filter]');
+	const cards = document.querySelectorAll<HTMLElement>('[data-skill-category]');
+
+	buttons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const selected = btn.getAttribute('data-skill-filter');
+
+			buttons.forEach((item) => {
+				const active = item === btn;
+				item.setAttribute('data-active', active ? 'true' : 'false');
+				item.classList.toggle('bg-primary-600', active);
+				item.classList.toggle('text-white', active);
+			});
+
+			cards.forEach((card) => {
+				const category = card.getAttribute('data-skill-category');
+				const shouldShow = selected === 'Todas' || category === selected;
+				card.classList.toggle('hidden', !shouldShow);
+			});
+		});
+	});
+</script>

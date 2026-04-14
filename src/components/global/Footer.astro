@@ -1,0 +1,40 @@
+---
+import { Link2, Globe, Mail } from '@lucide/astro';
+import { personal } from '../../data/personal';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-text-200/80 bg-white/65 backdrop-blur dark:border-text-800/70 dark:bg-text-950/65">
+	<div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6 lg:px-8">
+		<p class="text-small text-text-600 dark:text-text-300">© {year} {personal.name}. Todos los derechos reservados.</p>
+
+		<nav class="flex items-center gap-2" aria-label="Redes sociales">
+			<a
+				href={personal.social.github}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="GitHub"
+				class="rounded-full border border-text-300 p-2 text-text-700 transition hover:bg-text-100 dark:border-text-700 dark:text-text-200 dark:hover:bg-text-900"
+			>
+				<Link2 size={18} />
+			</a>
+			<a
+				href={personal.social.linkedin}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="LinkedIn"
+				class="rounded-full border border-text-300 p-2 text-text-700 transition hover:bg-text-100 dark:border-text-700 dark:text-text-200 dark:hover:bg-text-900"
+			>
+				<Globe size={18} />
+			</a>
+			<a
+				href={`mailto:${personal.email}`}
+				aria-label="Enviar correo"
+				class="rounded-full border border-text-300 p-2 text-text-700 transition hover:bg-text-100 dark:border-text-700 dark:text-text-200 dark:hover:bg-text-900"
+			>
+				<Mail size={18} />
+			</a>
+		</nav>
+	</div>
+</footer>

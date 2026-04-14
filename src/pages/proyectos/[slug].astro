@@ -1,0 +1,92 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Link2, Globe } from '@lucide/astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MainContainerSection from '../../components/ui/MainContainerSection.astro';
+import HeaderSection from '../../components/ui/HeaderSection.astro';
+import Button from '../../components/ui/Button.astro';
+import Carousel from '../../components/ui/Carousel.astro';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project }
+	}));
+}
+
+const { project } = Astro.props as { project: CollectionEntry<'projects'> };
+const { Content } = await render(project);
+
+const images = project.data.image
+	? [
+			{ src: project.data.image, alt: `Vista principal de ${project.data.title}` },
+			{ src: project.data.image, alt: `Detalle de interfaz de ${project.data.title}` },
+			{ src: project.data.image, alt: `Vista adicional de ${project.data.title}` }
+		]
+	: [];
+---
+
+<BaseLayout title={`${project.data.title} | Proyectos`} description={project.data.shortDescription} type="article">
+	<MainContainerSection class="pt-20">
+		<Button href="/proyectos" variant="ghost">← Volver a proyectos</Button>
+
+		<div class="mt-6 rounded-3xl bg-gradient-to-br from-primary-200 via-secondary-100 to-complement-200 p-10 dark:from-primary-900 dark:via-secondary-900 dark:to-complement-900">
+			<h1 class="font-extrabold text-text-900 dark:text-text-50">{project.data.title}</h1>
+			<p class="mt-4 max-w-2xl text-large text-text-700 dark:text-text-200">{project.data.description}</p>
+		</div>
+	</MainContainerSection>
+
+	<MainContainerSection>
+		<HeaderSection title="Stack tecnologico" />
+		<div class="flex flex-wrap gap-2">
+			{project.data.tags.map((tag) => (
+				<span class="rounded-full bg-primary-100 px-3 py-1.5 text-sm font-semibold text-primary-700 dark:bg-primary-900 dark:text-primary-200">
+					{tag}
+				</span>
+			))}
+		</div>
+
+		{(project.data.github || project.data.liveUrl) && (
+			<div class="mt-6 flex gap-3">
+				{project.data.github && (
+					<a
+						href={project.data.github}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 rounded-full border border-text-300 px-4 py-2 text-sm font-semibold text-text-700 hover:bg-text-100 dark:border-text-700 dark:text-text-100 dark:hover:bg-text-900"
+					>
+						<Link2 size={16} />
+						GitHub
+					</a>
+				)}
+				{project.data.liveUrl && (
+					<a
+						href={project.data.liveUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 rounded-full border border-text-300 px-4 py-2 text-sm font-semibold text-text-700 hover:bg-text-100 dark:border-text-700 dark:text-text-100 dark:hover:bg-text-900"
+					>
+						<Globe size={16} />
+						Demo en vivo
+					</a>
+				)}
+			</div>
+		)}
+	</MainContainerSection>
+
+	{images.length > 0 && (
+		<MainContainerSection>
+			<HeaderSection title="Capturas" />
+			<Carousel images={images} />
+		</MainContainerSection>
+	)}
+
+	<MainContainerSection>
+		<HeaderSection title="Detalles" />
+		<article class="prose prose-slate max-w-none dark:prose-invert">
+			<Content />
+		</article>
+	</MainContainerSection>
+</BaseLayout>
