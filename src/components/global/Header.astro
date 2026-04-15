@@ -2,6 +2,7 @@
 import { Moon, Sun } from '@lucide/astro';
 import NavMobile from './NavMobile.astro';
 import { personal } from '../../data/personal';
+import LogoWeb from '../ui/LogoWeb.astro';
 
 const links = [
 	{ href: '/', label: 'Inicio' },
@@ -13,7 +14,7 @@ const links = [
 
 <header class="sticky top-0 z-50 border-b border-text-200/70 bg-white/80 backdrop-blur-xl dark:border-text-800/70 dark:bg-text-950/75">
 	<div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-		<a href="/" class="font-bold tracking-tight text-text-900 dark:text-text-50">{personal.name}</a>
+		<LogoWeb />
 
 		<nav class="hidden items-center gap-2 md:flex" aria-label="Navegacion principal">
 			{links.map((link) => (

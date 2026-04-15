@@ -1,3 +1,47 @@
 ---
-import logoPng from ''
+// src/components/ui/LogoWeb.astro
+import { Image } from 'astro:assets';
+import logoSrc from '@assets/images/logotipo-bejar-dev.png';
+
+interface Props {
+  /**
+   * Activa carga prioritaria (eager + high fetchpriority).
+   * Úsalo en el Header o cualquier sección above-the-fold.
+   * Por defecto: false (lazy load para secciones secundarias).
+   */
+  priority?: boolean;
+  /** Ancho en px. Por defecto: 140 */
+  width?: number;
+  /** Alto en px. Por defecto: 40 */
+  height?: number;
+  /** Clases adicionales de Tailwind */
+  class?: string;
+}
+
+const {
+  priority = false,
+  width = 50,
+  height = 50,
+  class: className,
+} = Astro.props;
 ---
+
+<div class="flex gap-2 items-center">
+  <Image
+    src={logoSrc}
+    alt="Brayan Bejar — Desarrollador Web Astro y WordPress"
+    width={width}
+    height={height}
+    format="webp"
+    quality={90}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'low'}
+    decoding={priority ? 'sync' : 'async'}
+    class:list={['object-contain', className]}
+  />
+  <span
+    class="font-semibold text-large"
+  >
+    Bejar Dev
+  </span>
+</div>
