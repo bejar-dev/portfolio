@@ -1,14 +1,13 @@
 ---
 import { Moon, Sun } from '@lucide/astro';
 import NavMobile from './NavMobile.astro';
-import { personal } from '../../data/personal';
 import LogoWeb from '../ui/LogoWeb.astro';
 
 const links = [
 	{ href: '/', label: 'Inicio' },
-	{ href: '/sobre-mi', label: 'Sobre mi' },
-	{ href: '/skills', label: 'Skills' },
-	{ href: '/proyectos', label: 'Proyectos' }
+	{ href: '/sobre-mi/', label: 'Sobre mi' },
+	{ href: '/skills/', label: 'Skills' },
+	{ href: '/proyectos/', label: 'Proyectos' }
 ];
 ---
 
@@ -28,6 +27,23 @@ const links = [
 		</nav>
 
 		<div class="flex items-center gap-2">
+			<p class="hidden items-center gap-1.5 text-xs font-semibold text-complement-700 dark:text-complement-300 md:inline-flex">
+				<span class="relative flex h-2.5 w-2.5">
+					<span class="absolute inline-flex h-full w-full rounded-full bg-complement-400/70 motion-safe:animate-ping"></span>
+					<span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-complement-500"></span>
+				</span>
+				Disponible
+			</p>
+
+			<a
+				href="/CV_BRAYAN_JHAIR_BEJAR_RAMOS.pdf"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="hidden rounded-full border border-text-300 px-4 py-2 text-sm font-semibold text-text-800 transition hover:bg-text-100 dark:border-text-700 dark:text-text-100 dark:hover:bg-text-900 md:inline-flex"
+			>
+				Ver CV
+			</a>
+
 			<button
 				id="theme-toggle"
 				type="button"

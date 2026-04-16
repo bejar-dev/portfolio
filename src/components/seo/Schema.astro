@@ -1,21 +1,117 @@
 ---
-interface Props {
-	name: string;
-	jobTitle: string;
-	url: string;
-	sameAs: string[];
+type SchemaType = 'CreativeWork' | 'TechArticle' | 'SoftwareApplication';
+
+interface ProjectData {
+	title: string;
+	description: string;
+	image?: string;
+	github?: string;
+	liveUrl?: string;
+	date?: Date | string;
+	keywords?: string[];
+	schemaType?: SchemaType;
 }
 
-const { name, jobTitle, url, sameAs } = Astro.props;
+interface Props {
+	name?: string;
+	jobTitle?: string;
+	url?: string;
+	sameAs?: string[];
+	projectData?: ProjectData;
+	includeBreadcrumbs?: boolean;
+}
 
-const schema = {
-	'@context': 'https://schema.org',
-	'@type': 'Person',
+const {
 	name,
 	jobTitle,
 	url,
-	sameAs
-};
+	sameAs = [],
+	projectData,
+	includeBreadcrumbs = true
+} = Astro.props;
+
+const schemas: Record<string, unknown>[] = [];
+
+if (name && jobTitle && url) {
+	schemas.push({
+		'@context': 'https://schema.org',
+		'@type': 'Person',
+		name,
+		jobTitle,
+		url,
+		sameAs
+	});
+}
+
+if (projectData) {
+	const schemaType = projectData.schemaType ?? 'CreativeWork';
+	const publishedAt = projectData.date ? new Date(projectData.date).toISOString() : undefined;
+	const projectUrl = Astro.url.toString();
+	const imageUrl = projectData.image
+		? new URL(projectData.image, Astro.url).toString()
+		: new URL('/favicon.svg', Astro.url).toString();
+
+	const projectSchemaBase = {
+		'@context': 'https://schema.org',
+		'@type': schemaType,
+		name: projectData.title,
+		headline: projectData.title,
+		description: projectData.description,
+		url: projectData.liveUrl ?? projectUrl,
+		mainEntityOfPage: projectUrl,
+		image: imageUrl,
+		keywords: projectData.keywords,
+		datePublished: publishedAt,
+		author: name
+			? {
+				'@type': 'Person',
+				name,
+				url: url ?? new URL('/', Astro.url).toString()
+			}
+			: undefined,
+		codeRepository: projectData.github
+	};
+
+	if (schemaType === 'SoftwareApplication') {
+		schemas.push({
+			...projectSchemaBase,
+			applicationCategory: 'WebApplication'
+		});
+	} else {
+		schemas.push(projectSchemaBase);
+	}
+
+	if (includeBreadcrumbs) {
+		schemas.push({
+			'@context': 'https://schema.org',
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{
+					'@type': 'ListItem',
+					position: 1,
+					name: 'Inicio',
+					item: new URL('/', Astro.url).toString()
+				},
+				{
+					'@type': 'ListItem',
+					position: 2,
+					name: 'Proyectos',
+					item: new URL('/proyectos/', Astro.url).toString()
+				},
+				{
+					'@type': 'ListItem',
+					position: 3,
+					name: projectData.title,
+					item: projectUrl
+				}
+			]
+		});
+	}
+}
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+{
+	schemas.map((schema) => (
+		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+	))
+}

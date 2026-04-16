@@ -26,7 +26,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="flex gap-2 items-center">
+<a href="/" class="flex gap-2 items-center hover:scale-105 transition-all duration-300 ease-in-out" aria-label="Brayan Bejar — Desarrollador Web Astro y WordPress">
   <Image
     src={logoSrc}
     alt="Brayan Bejar — Desarrollador Web Astro y WordPress"
@@ -40,8 +40,8 @@ const {
     class:list={['object-contain', className]}
   />
   <span
-    class="font-semibold text-large"
+    class="font-black text-large text-text-900 dark:text-text-50 transition-colors"
   >
-    Bejar Dev
+    BR Code
   </span>
-</div>
+</a>
