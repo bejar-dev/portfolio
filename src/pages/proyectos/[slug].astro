@@ -1,11 +1,32 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { Link2, Globe } from '@lucide/astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import MainContainerSection from '../../components/ui/MainContainerSection.astro';
-import HeaderSection from '../../components/ui/HeaderSection.astro';
-import Button from '../../components/ui/Button.astro';
-import Carousel from '../../components/ui/Carousel.astro';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import Schema from '../../components/seo/Schema.astro';
+import ProjectHeroSection from '../../components/sections/projects/ProjectHeroSection.astro';
+import ProjectQuickProofSection from '../../components/sections/projects/ProjectQuickProofSection.astro';
+import ProjectRoleScopeSection from '../../components/sections/projects/ProjectRoleScopeSection.astro';
+import ProjectProblemSolutionSection from '../../components/sections/projects/ProjectProblemSolutionSection.astro';
+import ProjectGallerySection from '../../components/sections/projects/ProjectGallerySection.astro';
+import ProjectBodySection from '../../components/sections/projects/ProjectBodySection.astro';
+import ProjectLearningsSection from '../../components/sections/projects/ProjectLearningsSection.astro';
+import ProjectCTASection from '../../components/sections/projects/ProjectCTASection.astro';
+import ProjectRelatedSection from '../../components/sections/projects/ProjectRelatedSection.astro';
+import ProjectMdxH2 from '../../components/sections/projects/mdx/ProjectMdxH2.astro';
+import ProjectMdxH3 from '../../components/sections/projects/mdx/ProjectMdxH3.astro';
+import ProjectMdxParagraph from '../../components/sections/projects/mdx/ProjectMdxParagraph.astro';
+import ProjectMdxUl from '../../components/sections/projects/mdx/ProjectMdxUl.astro';
+import ProjectMdxOl from '../../components/sections/projects/mdx/ProjectMdxOl.astro';
+import ProjectMdxLi from '../../components/sections/projects/mdx/ProjectMdxLi.astro';
+import ProjectMdxBlockquote from '../../components/sections/projects/mdx/ProjectMdxBlockquote.astro';
+import { personal } from '../../data/personal';
+
+const experienceLabels: Record<string, string> = {
+	'bcp-consulting-eirl': 'BCP Consulting EIRL',
+	'consigue-ventas-eirl': 'Consigue Ventas EIRL',
+	'creanding-eirl': 'Creanding EIRL',
+	'orbita-labs': 'Orbita Labs',
+	independiente: 'Proyecto independiente'
+};
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -18,75 +39,117 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props as { project: CollectionEntry<'projects'> };
 const { Content } = await render(project);
+const allProjects = await getCollection('projects');
 
-const images = project.data.image
-	? [
-			{ src: project.data.image, alt: `Vista principal de ${project.data.title}` },
-			{ src: project.data.image, alt: `Detalle de interfaz de ${project.data.title}` },
-			{ src: project.data.image, alt: `Vista adicional de ${project.data.title}` }
-		]
-	: [];
+const groupLabel =
+	project.data.experienceGroupLabel ??
+	(project.data.experienceGroup ? experienceLabels[project.data.experienceGroup] : undefined);
+
+const projectSchema = {
+	title: project.data.title,
+	description: project.data.shortDescription,
+	image: project.data.image,
+	github: project.data.github,
+	liveUrl: project.data.liveUrl,
+	date: project.data.date,
+	keywords: project.data.tags,
+	schemaType: project.data.schemaType
+};
+
+const imageSet = project.data.gallery?.length ? project.data.gallery : project.data.image ? [project.data.image] : [];
+
+const images = imageSet.map((src, index) => ({
+	src,
+	alt: `Captura ${index + 1} del proyecto ${project.data.title}`
+}));
+
+const relatedProjects = allProjects
+	.filter((candidate) => candidate.id !== project.id)
+	.filter((candidate) => {
+		if (project.data.experienceGroup && candidate.data.experienceGroup === project.data.experienceGroup) {
+			return true;
+		}
+
+		return candidate.data.tags.some((tag) => project.data.tags.includes(tag));
+	})
+	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+	.slice(0, 3)
+	.map((candidate) => ({
+		...candidate,
+		data: {
+			...candidate.data,
+			experienceGroupLabel:
+				candidate.data.experienceGroupLabel ??
+				(candidate.data.experienceGroup
+					? experienceLabels[candidate.data.experienceGroup]
+					: undefined)
+		}
+	}));
+
+const mdxComponents = {
+	h2: ProjectMdxH2,
+	h3: ProjectMdxH3,
+	p: ProjectMdxParagraph,
+	ul: ProjectMdxUl,
+	ol: ProjectMdxOl,
+	li: ProjectMdxLi,
+	blockquote: ProjectMdxBlockquote
+};
 ---
 
-<BaseLayout title={`${project.data.title} | Proyectos`} description={project.data.shortDescription} type="article">
-	<MainContainerSection class="pt-20">
-		<Button href="/proyectos" variant="ghost">← Volver a proyectos</Button>
+<ProjectLayout title={`${project.data.title} | Proyectos`} description={project.data.shortDescription} image={project.data.image} type="article">
+	<Schema
+		name={personal.name}
+		jobTitle={personal.role}
+		url={new URL('/', Astro.site ?? Astro.url).toString()}
+		sameAs={[personal.social.github, personal.social.linkedin]}
+		projectData={projectSchema}
+	/>
 
-		<div class="mt-6 rounded-3xl bg-gradient-to-br from-primary-200 via-secondary-100 to-complement-200 p-10 dark:from-primary-900 dark:via-secondary-900 dark:to-complement-900">
-			<h1 class="font-extrabold text-text-900 dark:text-text-50">{project.data.title}</h1>
-			<p class="mt-4 max-w-2xl text-large text-text-700 dark:text-text-200">{project.data.description}</p>
-		</div>
-	</MainContainerSection>
+	<ProjectHeroSection
+		title={project.data.title}
+		description={project.data.description}
+		shortDescription={project.data.shortDescription}
+		role={project.data.role}
+		experienceGroupLabel={groupLabel}
+		date={project.data.date}
+		liveUrl={project.data.liveUrl}
+		github={project.data.github}
+	/>
 
-	<MainContainerSection>
-		<HeaderSection title="Stack tecnologico" />
-		<div class="flex flex-wrap gap-2">
-			{project.data.tags.map((tag) => (
-				<span class="rounded-full bg-primary-100 px-3 py-1.5 text-sm font-semibold text-primary-700 dark:bg-primary-900 dark:text-primary-200">
-					{tag}
-				</span>
-			))}
-		</div>
-
-		{(project.data.github || project.data.liveUrl) && (
-			<div class="mt-6 flex gap-3">
-				{project.data.github && (
-					<a
-						href={project.data.github}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 rounded-full border border-text-300 px-4 py-2 text-sm font-semibold text-text-700 hover:bg-text-100 dark:border-text-700 dark:text-text-100 dark:hover:bg-text-900"
-					>
-						<Link2 size={16} />
-						GitHub
-					</a>
-				)}
-				{project.data.liveUrl && (
-					<a
-						href={project.data.liveUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 rounded-full border border-text-300 px-4 py-2 text-sm font-semibold text-text-700 hover:bg-text-100 dark:border-text-700 dark:text-text-100 dark:hover:bg-text-900"
-					>
-						<Globe size={16} />
-						Demo en vivo
-					</a>
-				)}
-			</div>
-		)}
-	</MainContainerSection>
-
-	{images.length > 0 && (
-		<MainContainerSection>
-			<HeaderSection title="Capturas" />
-			<Carousel images={images} />
-		</MainContainerSection>
+	{project.data.impactMetrics && project.data.impactMetrics.length > 0 && (
+		<ProjectQuickProofSection metrics={project.data.impactMetrics} />
 	)}
 
-	<MainContainerSection>
-		<HeaderSection title="Detalles" />
-		<article class="prose prose-slate max-w-none dark:prose-invert">
-			<Content />
-		</article>
-	</MainContainerSection>
-</BaseLayout>
+	<ProjectRoleScopeSection
+		experienceGroupLabel={groupLabel}
+		experienceRoleSummary={project.data.experienceRoleSummary}
+		role={project.data.role}
+		duration={project.data.duration}
+		tags={project.data.tags}
+	/>
+
+	{(project.data.problem || project.data.solution) && (
+		<ProjectProblemSolutionSection problem={project.data.problem} solution={project.data.solution} />
+	)}
+
+	{images.length > 0 && <ProjectGallerySection images={images} />}
+
+	<ProjectBodySection>
+		<Content components={mdxComponents} />
+	</ProjectBodySection>
+
+	{project.data.lessons && project.data.lessons.length > 0 && (
+		<ProjectLearningsSection lessons={project.data.lessons} />
+	)}
+
+	<ProjectCTASection liveUrl={project.data.liveUrl} github={project.data.github} cta={project.data.cta} />
+
+	{relatedProjects.length > 0 && <ProjectRelatedSection projects={relatedProjects} />}
+</ProjectLayout>
+
+<style>
+	#project-content h2 {
+		margin-top: 2rem;
+	}
+</style>
