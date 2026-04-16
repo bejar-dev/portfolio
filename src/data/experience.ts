@@ -9,27 +9,53 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
-    company: 'Nova Pixel Studio',
-    role: 'Frontend Developer',
-    startDate: '2022-02',
-    endDate: '2024-06',
+    company: 'BCP Consulting EIRL',
+    role: 'Desarrollador Web WordPress / Astro + Responsable SEO y SEM',
+    startDate: '2025-06',
+    endDate: '2026-04',
     description: [
-      'Disene y construI interfaces para productos SaaS con enfoque mobile-first.',
-      'Mejore el rendimiento de carga inicial en un 35% optimizando imagenes y CSS.',
-      'Colabore con UX para consolidar un sistema de componentes reutilizables.'
+      'Desarrolle y mantuve sitios corporativos y comerciales en WordPress y Astro, priorizando rendimiento, estructura clara y enfoque mobile-first.',
+      'Implemente SEO tecnico y on-page (arquitectura, metadatos, contenido y SEO local) para mejorar visibilidad en busquedas de alta intencion.',
+      'Gestione campanas de Google Ads y configuracion de medicion con GA4, GTM y Search Console para dar seguimiento real al rendimiento.'
     ],
-    technologies: ['Astro', 'TypeScript', 'Tailwind CSS', 'Vite']
+    technologies: [
+      'WordPress',
+      'Elementor',
+      'WooCommerce',
+      'Astro',
+      'Tailwind CSS',
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'Google Ads',
+      'Google Analytics 4',
+      'Google Tag Manager',
+      'Google Search Console',
+      'GitHub Actions'
+    ]
   },
   {
-    company: 'Orbita Labs',
-    role: 'Full Stack Developer',
-    startDate: '2024-07',
-    endDate: 'Presente',
+    company: 'Creanding EIRL',
+    role: 'Desarrollador WordPress',
+    startDate: '2025-03',
+    endDate: '2025-05',
     description: [
-      'Lidero el desarrollo de APIs y paneles internos para equipos operativos.',
-      'Implemente autenticacion segura y trazabilidad de eventos en servicios clave.',
-      'Participo en decisiones de arquitectura y estandares de calidad de codigo.'
+      'Participe en mejoras del sitio web de la agencia, enfocadas en rediseno de secciones clave y claridad visual.',
+      'Optimice elementos que afectaban la velocidad de carga para mejorar la experiencia de navegacion.',
+      'Actualice contenido institucional y de servicios para mantener consistencia de marca y mensaje comercial.'
     ],
-    technologies: ['Node.js', 'PostgreSQL', 'Prisma', 'Astro']
+    technologies: ['WordPress', 'Elementor', 'HTML', 'CSS', 'JavaScript']
+  },
+  {
+    company: 'Consigue Ventas EIRL',
+    role: 'Desarrollador WordPress',
+    startDate: '2024-09',
+    endDate: '2025-01',
+    description: [
+      'Implemente sitios web completos en WordPress a partir de disenos UX/UI entregados por el equipo de la agencia.',
+      'Maquete paginas institucionales y de servicios cuidando fidelidad visual, usabilidad y tiempos de entrega.',
+      'Optimice imagenes y adapte contenido en espanol e ingles segun los requerimientos de cada cliente.'
+    ],
+    technologies: ['WordPress', 'Elementor', 'HTML', 'CSS', 'JavaScript']
   }
 ];
