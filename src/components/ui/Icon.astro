@@ -1,0 +1,19 @@
+---
+import { getSvg } from '../../utils/svgLoader';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = '' } = Astro.props;
+const svgContent = getSvg(name);
+
+if (!svgContent) {
+  console.warn(`⚠️ Icon not found: ${name}`);
+}
+---
+
+{svgContent && (
+  <span class={`inline-flex items-center justify-center ${className}`} set:html={svgContent} />
+)}
