@@ -1,0 +1,23 @@
+# brcode.dev
+
+> Portafolio profesional de Brayan Jhair Bejar Ramos, desarrollador web Frontend especializado en Astro, WordPress, TypeScript y productos web de alto rendimiento.
+
+## Páginas principales
+
+- [Inicio](https://brcode.dev/): Presentación profesional y proyectos destacados.
+- [Proyectos](https://brcode.dev/proyectos/): Listado completo de trabajos y experimentos.
+- [Sobre mí](https://brcode.dev/sobre-mi/): Experiencia, educación y forma de trabajo.
+
+## Proyectos destacados
+
+- [Plataforma E-commerce Modular](https://brcode.dev/proyectos/proyecto-ecommerce/): Tienda online con pasarela de pagos y panel administrativo.
+- [Dashboard de Analytics SaaS](https://brcode.dev/proyectos/proyecto-dashboard/): Panel de métricas en tiempo real para equipos de producto.
+
+## Tecnologías principales
+
+Astro, TypeScript, Tailwind CSS, Node.js, TypeScript, WordPress, Elementor, Search Console, Google Ads
+
+## Contacto
+
+- GitHub: https://github.com/bejar-dev
+- LinkedIn: https://linkedin.com/in/brayan-bejar

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brcode.dev/sitemap-index.xml
