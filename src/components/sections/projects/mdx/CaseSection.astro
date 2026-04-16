@@ -1,0 +1,30 @@
+---
+interface Props {
+	title: string;
+	eyebrow?: string;
+	tone?: 'default' | 'accent';
+	class?: string;
+}
+
+const { title, eyebrow, tone = 'default', class: className } = Astro.props;
+---
+
+<section
+	class:list={[
+		'mt-10 rounded-2xl border p-6 sm:p-7',
+		tone === 'accent'
+			? 'border-primary-300 bg-primary-50/60 dark:border-primary-800 dark:bg-primary-950/30'
+			: 'border-text-200 bg-white/70 dark:border-text-800 dark:bg-text-950/60',
+		className
+	]}
+>
+	{eyebrow && (
+		<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">
+			{eyebrow}
+		</p>
+	)}
+	<h3 class="text-title-h4 font-semibold text-text-900 dark:text-text-50">{title}</h3>
+	<div class="mt-4 space-y-4 text-text-700 dark:text-text-200">
+		<slot />
+	</div>
+</section>

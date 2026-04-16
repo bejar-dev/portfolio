@@ -1,0 +1,37 @@
+---
+interface RelatedProject {
+	id: string;
+	data: {
+		title: string;
+		shortDescription: string;
+		experienceGroupLabel?: string;
+		date: Date;
+	};
+}
+
+interface Props {
+	projects: RelatedProject[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="mt-12">
+	<h2 class="text-title-h4 font-semibold text-text-900 dark:text-text-50">Tambien podria interesarte</h2>
+	<div class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+		{projects.map((project) => (
+			<article class="rounded-2xl border border-text-200 bg-white/75 p-5 shadow-sm dark:border-text-800 dark:bg-text-950/70">
+				{project.data.experienceGroupLabel && (
+					<p class="text-xs font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">
+						{project.data.experienceGroupLabel}
+					</p>
+				)}
+				<h3 class="mt-2 font-bold text-text-900 dark:text-text-50">{project.data.title}</h3>
+				<p class="mt-2 text-small text-text-700 dark:text-text-200">{project.data.shortDescription}</p>
+				<a href={`/proyectos/${project.id}/`} class="mt-4 inline-flex text-sm font-semibold text-primary-700 hover:underline dark:text-primary-300">
+					Ver detalle
+				</a>
+			</article>
+		))}
+	</div>
+</section>

@@ -1,0 +1,24 @@
+---
+import HeaderSection from '../../ui/HeaderSection.astro';
+---
+
+<section class="mt-12">
+	<HeaderSection title="Caso completo" subtitle="Decisiones, implementacion y resultados en detalle." />
+	<article class="project-mdx-content max-w-none">
+		<slot />
+	</article>
+</section>
+
+<style>
+	.project-mdx-content > :where(* + *) {
+		margin-top: 1.25rem;
+	}
+
+	.project-mdx-content :where(section) {
+		margin-top: 2rem;
+	}
+
+	.project-mdx-content :where(blockquote) {
+		margin-top: 1.5rem;
+	}
+</style>

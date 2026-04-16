@@ -1,0 +1,29 @@
+---
+interface Props {
+	role: string;
+	company?: string;
+	period?: string;
+	scope?: string;
+	highlights?: string[];
+}
+
+const { role, company, period, scope, highlights = [] } = Astro.props;
+---
+
+<section class="mt-10 rounded-2xl border border-text-200 bg-white/80 p-6 sm:p-7 dark:border-text-800 dark:bg-text-950/70">
+	<p class="text-xs font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">Mi participacion</p>
+	<h3 class="mt-2 text-title-h4 font-semibold text-text-900 dark:text-text-50">{role}</h3>
+	{(company || period) && (
+		<p class="mt-2 text-small text-text-600 dark:text-text-300">
+			{company}{company && period ? ' · ' : ''}{period}
+		</p>
+	)}
+	{scope && <p class="mt-3 text-text-700 dark:text-text-200">{scope}</p>}
+	{highlights.length > 0 && (
+		<ul class="mt-4 space-y-2 pl-5 text-text-700 dark:text-text-200">
+			{highlights.map((item) => (
+				<li class="marker:text-primary-500 dark:marker:text-primary-300">{item}</li>
+			))}
+		</ul>
+	)}
+</section>

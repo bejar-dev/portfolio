@@ -1,0 +1,25 @@
+---
+interface MetricItem {
+	label: string;
+	value: string;
+	detail?: string;
+}
+
+interface Props {
+	metrics: MetricItem[];
+}
+
+const { metrics } = Astro.props;
+---
+
+<section class="mt-8">
+	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		{metrics.map((metric) => (
+			<article class="rounded-2xl border border-primary-200 bg-white/75 p-5 shadow-sm dark:border-primary-800 dark:bg-text-950/70">
+				<p class="text-xs font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">{metric.label}</p>
+				<p class="mt-2 text-2xl font-bold text-text-900 dark:text-text-50">{metric.value}</p>
+				{metric.detail && <p class="mt-2 text-small text-text-600 dark:text-text-300">{metric.detail}</p>}
+			</article>
+		))}
+	</div>
+</section>

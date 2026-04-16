@@ -1,0 +1,27 @@
+---
+interface Metric {
+	label: string;
+	value: string;
+	detail?: string;
+}
+
+interface Props {
+	title?: string;
+	items: Metric[];
+}
+
+const { title = 'Impacto medible', items } = Astro.props;
+---
+
+<section class="mt-10 rounded-2xl border border-complement-300 bg-complement-50/60 p-6 sm:p-7 dark:border-complement-800 dark:bg-complement-950/30">
+	<h3 class="text-title-h4 font-semibold text-text-900 dark:text-text-50">{title}</h3>
+	<div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+		{items.map((item) => (
+			<article class="rounded-xl border border-white/70 bg-white/80 p-4 dark:border-text-800 dark:bg-text-950/70">
+				<p class="text-xs font-semibold uppercase tracking-wide text-complement-700 dark:text-complement-300">{item.label}</p>
+				<p class="mt-1 text-xl font-bold text-text-900 dark:text-text-50">{item.value}</p>
+				{item.detail && <p class="mt-1 text-small text-text-600 dark:text-text-300">{item.detail}</p>}
+			</article>
+		))}
+	</div>
+</section>

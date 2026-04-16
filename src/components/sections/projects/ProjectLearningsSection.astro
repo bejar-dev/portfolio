@@ -1,0 +1,18 @@
+---
+interface Props {
+	lessons: string[];
+}
+
+const { lessons } = Astro.props;
+---
+
+<section class="mt-12 rounded-2xl border border-complement-300 bg-complement-50/70 p-6 dark:border-complement-800 dark:bg-complement-950/20">
+	<h2 class="text-title-h4 font-semibold text-text-900 dark:text-text-50">Aprendizajes clave</h2>
+	<ul class="mt-4 space-y-3">
+		{lessons.map((lesson) => (
+			<li class="rounded-xl bg-white/70 px-4 py-3 text-text-700 shadow-sm dark:bg-text-900/60 dark:text-text-200">
+				{lesson}
+			</li>
+		))}
+	</ul>
+</section>
