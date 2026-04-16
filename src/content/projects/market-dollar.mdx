@@ -14,39 +14,74 @@ tags:
 liveUrl: "https://market-dollar.com"
 featured: true
 date: 2025-01-15
+experienceGroup: bcp-consulting-eirl
+experienceGroupLabel: "BCP Consulting EIRL"
+role: "Desarrollador Frontend Astro + Responsable SEO y SEM"
+schemaType: "TechArticle"
 ---
 
 ## El reto
 
 Market Dollar operaba con una arquitectura monolítica en Next.js donde la web informativa y la app web compartían el mismo repositorio. Al incorporarme con el objetivo de mejorar el posicionamiento orgánico, identifiqué que esta arquitectura limitaba la velocidad de carga y dificultaba aplicar estrategias de contenido escalables. Propuse y lideré la migración completa de la web informativa a Astro SSG.
 
-## Mi rol
+import CaseSection from '../../components/sections/projects/mdx/CaseSection.astro';
+import RoleSnapshot from '../../components/sections/projects/mdx/RoleSnapshot.astro';
+import ImpactMetrics from '../../components/sections/projects/mdx/ImpactMetrics.astro';
 
 Trabajé como **Frontend Developer + SEO Specialist**, a cargo de toda la capa informativa del sitio. No intervine en el desarrollo de la app web transaccional.
 
+
+<RoleSnapshot
+  role="Frontend Developer + SEO Specialist"
+  company="Orbita Labs"
+  scope="Lideré arquitectura de contenido SEO, implementación frontend en Astro y coordinación de performance/medición para mejorar captación orgánica y de pago."
+  highlights={[
+    'Migración informativa de Next.js a Astro SSG',
+    'Diseño de páginas dinámicas por localidad y por intención de compra',
+    'Implementación de stack completo de analítica y medición'
+  ]}
+/>
 ## Lo que construí
+
+<CaseSection title="Arquitectura de contenido para SEO" eyebrow="Implementación" tone="accent">
 
 ### Arquitectura de contenido para SEO
 
-Diseñé e implementé una estrategia de páginas dinámicas orientada a capturar búsquedas de alto volumen con intención local y transaccional:
+</CaseSection>
 
 - **Páginas por localidad:** casas de cambio en Miraflores, San Isidro, Juliaca, entre otras, generadas dinámicamente desde Astro.
+
+<CaseSection title="Visualización de datos con Chart.js" eyebrow="Retención" tone="default">
 - **Páginas de conversión por monto:** "3000 dólares a soles", "500 dólares a soles", targeting de long-tail con intención de compra directa.
 - **Conversor en tiempo real:** integración con la API interna de Market Dollar para mostrar tasas actualizadas al instante.
 
+</CaseSection>
+
 ### Visualización de datos con Chart.js
+
+<CaseSection title="Stack de medición completo" eyebrow="Analytics" tone="default">
 
 Implementé un gráfico de historial de tipo de cambio consumiendo la API de [dolar.pe](https://dolar.pe) con datos de hasta 30 días, renderizado con Chart.js. Esto mejoró el tiempo en página y redujo la tasa de rebote al aportar valor informativo real.
 
-### Stack de medición completo
-
+</CaseSection>
 Configuré e integré de cero las siguientes herramientas:
 
+
+<CaseSection title="Campaña de Google Ads" eyebrow="Adquisición" tone="default">
 - Google Analytics 4 (GA4)
 - Google Tag Manager (GTM)
+
+</CaseSection>
 - Google Search Console (GSC)
-- Bing Webmaster Tools
-- IndexNow (indexación acelerada en Bing y Yandex)
+
+<ImpactMetrics
+  title="Resultados destacados"
+  items={[
+    { label: 'Keyword objetivo', value: '1000+ búsquedas/mes', detail: 'Consultas estratégicas en Google' },
+    { label: 'Visibilidad orgánica', value: 'Crecimiento sostenido', detail: 'Más impresiones y clics en GSC' },
+    { label: 'Reconocimiento', value: 'Brand traffic al alza', detail: 'Mayor búsqueda por marca' }
+  ]}
+/>
 
 ### Campaña de Google Ads
 

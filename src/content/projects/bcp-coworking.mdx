@@ -1,0 +1,92 @@
+---
+title: "BCP Business Center Coworking"
+shortDescription: "Sitio web 100% en Astro SSG con despliegue automatizado via GitHub Actions y formulario integrado con Google Sheets."
+description: "Creación completa del sitio web para un espacio de coworking en Lima: desde la arquitectura en Astro hasta la automatización del deploy por FTP y la integración del formulario de contacto con Google Sheets como CRM ligero."
+tags:
+  - Astro
+  - Tailwind CSS
+  - GitHub Actions
+  - Google Sheets
+  - SEO Técnico
+  - FTP Deploy
+liveUrl: "http://coworking.bcpconsulting.pe"
+featured: true
+date: 2024-09-10
+experienceGroup: bcp-consulting-eirl
+experienceGroupLabel: "BCP Consulting EIRL"
+role: "Desarrollador Frontend Astro + Responsable SEO"
+schemaType: "CreativeWork"
+---
+
+import CaseSection from '../../components/sections/projects/mdx/CaseSection.astro';
+import RoleSnapshot from '../../components/sections/projects/mdx/RoleSnapshot.astro';
+import ImpactMetrics from '../../components/sections/projects/mdx/ImpactMetrics.astro';
+
+## El reto
+
+BCP Business Center necesitaba una presencia web para su espacio de coworking que fuera rápida, económica de mantener y que capturara leads sin necesidad de un CRM complejo. El sitio debía vivir como subdominio dentro de la infraestructura existente del cliente, alojada en DonWeb.
+
+## Mi rol
+
+Llevé el proyecto de principio a fin: arquitectura, diseño, desarrollo, copywriting, integraciones y automatización del deploy. El cliente me proveyó el logo, la información de precios y los espacios disponibles.
+
+<RoleSnapshot
+  role="Frontend Developer"
+  company="BCP Consulting EIRL"
+  scope="Tomé ownership completo del producto web: desde arquitectura y UX hasta integraciones y automatización de despliegue en hosting compartido."
+  highlights={[
+    'Sitio 100% Astro SSG enfocado en performance',
+    'Formulario integrado con Google Sheets como CRM ligero',
+    'Pipeline CI/CD por GitHub Actions + FTP'
+  ]}
+/>
+
+## Lo que construí
+
+<CaseSection title="Implementación full-stack web" eyebrow="Entrega" tone="accent">
+
+### Sitio 100% Astro SSG
+
+Construí el sitio completo en Astro con generación estática, garantizando tiempos de carga mínimos y rendimiento óptimo sin necesidad de servidor Node en producción. Todo el CSS usa Tailwind con enfoque mobile-first.
+
+### Formulario conectado a Google Sheets
+
+Integré el formulario de contacto directamente con Google Sheets mediante Google Apps Script, convirtiendo una hoja de cálculo en un CRM ligero donde el cliente recibe cada lead automáticamente sin herramientas de pago.
+
+### Pipeline de deploy automático con GitHub Actions
+
+Configuré un workflow en GitHub Actions que realiza el proceso completo de CI/CD:
+
+1. En cada push a `main`, GitHub Actions instala dependencias y ejecuta `astro build`.
+2. Los archivos generados en `/dist` se transfieren automáticamente por FTP al directorio `public_html/coworking` en DonWeb.
+
+Esto eliminó la necesidad de subir archivos manualmente y garantizó que cualquier actualización de contenido se refleje en producción en minutos.
+
+### Configuración del subdominio
+
+Configuré el subdominio `coworking.bcpconsulting.pe` directamente en el panel de DonWeb, apuntando al directorio correspondiente dentro del hosting compartido.
+
+</CaseSection>
+
+## Detalles técnicos destacables
+
+<CaseSection title="Detalle técnico" eyebrow="Arquitectura" tone="default">
+
+- **Zero JS por defecto:** al ser 100% SSG, el sitio no envía JavaScript al cliente salvo para interacciones puntuales.
+- **Deploy reproducible:** el pipeline de GitHub Actions asegura que el entorno de build es siempre el mismo, eliminando el clásico "en mi máquina funciona".
+- **Sin backend propio:** Google Sheets como receptor de formularios es una solución pragmática y sin costo para clientes pequeños.
+
+</CaseSection>
+
+<ImpactMetrics
+  title="Resultados del enfoque"
+  items={[
+    { label: 'Modelo de entrega', value: 'SSG + CI/CD', detail: 'Publicación reproducible y rápida' },
+    { label: 'Costo operativo', value: 'Sin backend dedicado', detail: 'Google Sheets como receptor de leads' },
+    { label: 'Mantenimiento', value: 'Actualización en minutos', detail: 'Deploy automático con push a main' }
+  ]}
+/>
+
+## Contexto
+
+Proyecto desarrollado durante mi etapa en **Orbita Labs / BCP Consulting**, primer proyecto de Astro que tomé a cargo de manera independiente dentro de la empresa.

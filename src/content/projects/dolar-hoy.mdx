@@ -1,0 +1,87 @@
+---
+title: "Dolar Hoy"
+shortDescription: "Portal de tipo de cambio en tiempo real con mapa interactivo de casas de cambio, construido sobre Astro con React Islands."
+description: "Participé en la fase inicial de este portal que busca competir con los principales sitios de tipo de cambio en Perú, aportando nuevas secciones, configuración de blog y noticias, y soporte en la configuración de infraestructura en AWS con Portainer y Caddy."
+tags:
+  - Astro
+  - React
+  - Astro Islands
+  - AWS
+  - Portainer
+  - Caddy
+  - SEO Técnico
+liveUrl: "https://dolarhoy.pe"
+featured: true
+date: 2024-11-20
+experienceGroup: bcp-consulting-eirl
+experienceGroupLabel: "BCP Consulting EIRL"
+role: "Desarrollador Frontend Astro + Responsable SEO"
+schemaType: "TechArticle"
+---
+
+import CaseSection from '../../components/sections/projects/mdx/CaseSection.astro';
+import RoleSnapshot from '../../components/sections/projects/mdx/RoleSnapshot.astro';
+import ImpactMetrics from '../../components/sections/projects/mdx/ImpactMetrics.astro';
+
+## El proyecto
+
+Dolar Hoy nació con un objetivo ambicioso: construir el portal de referencia para el tipo de cambio en Perú, diferenciándose de competidores como cuantoestaeldolar.pe mediante un mapa interactivo que muestra casas de cambio verificadas cerca de la ubicación del usuario, datos actualizados cada 30 segundos y un directorio estructurado con información de la SBS.
+
+## Mi rol
+
+Me incorporé cuando el proyecto ya tenía una base funcional. Mi participación fue en la **mejora de secciones existentes, creación de nuevas páginas y soporte en la configuración de infraestructura**. El proyecto actualmente está en pausa.
+
+<RoleSnapshot
+  role="Frontend Developer con soporte DevOps"
+  company="Orbita Labs"
+  scope="Aporté en evolución funcional del portal y en tareas de infraestructura productiva, respetando la arquitectura Astro + Islands para mantener rendimiento."
+  highlights={[
+    'Nuevas secciones y páginas en Astro + React Islands',
+    'Implementación de blog y noticias',
+    'Soporte operativo en AWS, Portainer y Caddy'
+  ]}
+/>
+
+## Lo que aporté
+
+<CaseSection title="Aportes técnicos" eyebrow="Implementación" tone="accent">
+
+### Desarrollo frontend con Astro + React Islands
+
+La arquitectura usaba Astro como base SSG con componentes React hidratados selectivamente usando la directiva `client:*` (Astro Islands). Me encargué de mejorar las secciones informativas y crear páginas nuevas respetando esta arquitectura para no comprometer el rendimiento del sitio.
+
+### Sección de noticias y blog
+
+Configuré e implementé las secciones de **noticias** y **blog** del portal, incluyendo la estructura de rutas, los layouts de artículo y la integración con el sistema de contenido.
+
+### Infraestructura: primer contacto con AWS y DevOps
+
+En este proyecto tuve mi primera exposición práctica a herramientas de infraestructura:
+
+- **Consola SSH en instancia AWS EC2:** accedí y ejecuté comandos directamente en el servidor del proyecto.
+- **Portainer:** actualicé imágenes Docker y stacks del entorno de producción desde la interfaz web de Portainer.
+- **Caddy como reverse proxy:** creé un nuevo stack de Caddy y configuré el `Caddyfile` desde consola SSH para que el dominio renderizara correctamente los datos de la aplicación.
+- **Variables de entorno:** actualicé los envs del sistema junto a los stacks e imágenes para sincronizar la configuración del dominio con los servicios internos.
+
+</CaseSection>
+
+## Aprendizajes clave
+
+<CaseSection title="Aprendizaje profesional" eyebrow="Evolución" tone="default">
+
+Este proyecto marcó mi primer contacto real con infraestructura de producción. Entender cómo un stack de contenedores se configura, cómo Caddy actúa como proxy y cómo los entornos Docker se gestionan desde Portainer amplió significativamente mi visión más allá del frontend puro.
+
+</CaseSection>
+
+<ImpactMetrics
+  title="Resultado de participación"
+  items={[
+    { label: 'Frontend', value: 'Arquitectura respetada', detail: 'Astro + Islands sin degradar performance' },
+    { label: 'Contenido', value: 'Blog y noticias', detail: 'Nuevas rutas y layouts funcionales' },
+    { label: 'Infraestructura', value: 'Primer entorno productivo', detail: 'AWS, Portainer, Caddy y variables de entorno' }
+  ]}
+/>
+
+## Contexto
+
+Proyecto desarrollado durante mi etapa en **Orbita Labs**. Participe en la fase inicial; el proyecto continúa su desarrollo sin mi participación activa.
